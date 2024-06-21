@@ -29,7 +29,7 @@ const StepCounter = () => {
     setLastAcc({ x: filteredX, y: filteredY, z: filteredZ });
 
     // Parameters for step detection
-    const threshold = 4.3; // Threshold for acceleration magnitude to count as a step
+    const threshold = 2; // Threshold for acceleration magnitude to count as a step
     const timeBetweenSteps = 1000; // Minimum time between steps in milliseconds
 
     switch (state) {
