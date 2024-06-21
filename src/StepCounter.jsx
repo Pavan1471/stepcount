@@ -53,7 +53,7 @@ const StepCounter = () => {
 
   return (
     <div>
-      <h1>Step Count</h1>
+      <h1>Ste Count</h1>
       <p>Steps: {steps}</p>
       <p>Acceleration Magnitude: {accelerationMagnitude.toFixed(2)}</p>
     </div>
