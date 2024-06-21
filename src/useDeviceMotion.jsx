@@ -24,3 +24,4 @@ const useDeviceMotion = () => {
 
 export default useDeviceMotion;
 
+

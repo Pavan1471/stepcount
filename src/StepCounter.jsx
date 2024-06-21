@@ -4,9 +4,10 @@ import useDeviceMotion from './useDeviceMotion';
 const StepCounter = () => {
   const { x, y, z } = useDeviceMotion();
   const [steps, setSteps] = useState(0);
-  const [lastAcc, setLastAcc] = useState({ x: 0, y: 0, z: 0 });
   const [lastPeak, setLastPeak] = useState(Date.now());
-  const [acceleration, setAcceleration] = useState(0);
+  const [filteredAcc, setFilteredAcc] = useState({ x: 0, y: 0, z: 0 });
+  const [lastAcc, setLastAcc] = useState({ x: 0, y: 0, z: 0 });
+  const [accelerationMagnitude, setAccelerationMagnitude] = useState(0);
 
   useEffect(() => {
     const alpha = 0.8; // Low-pass filter constant
@@ -20,9 +21,10 @@ const StepCounter = () => {
     const filteredY = y - gravity.y;
     const filteredZ = z - gravity.z;
 
-    const accelerationMagnitude = Math.sqrt(filteredX * filteredY + filteredZ * filteredZ);
+    setFilteredAcc({ x: filteredX, y: filteredY, z: filteredZ });
 
-    setAcceleration(accelerationMagnitude);
+    const magnitude = Math.sqrt(filteredX * filteredX + filteredY * filteredY + filteredZ * filteredZ);
+    setAccelerationMagnitude(magnitude);
     setLastAcc({ x: filteredX, y: filteredY, z: filteredZ });
 
     // Parameters for step detection
@@ -30,7 +32,7 @@ const StepCounter = () => {
     const timeBetweenSteps = 300; // Minimum time between steps in milliseconds
 
     if (
-      accelerationMagnitude > threshold &&
+      magnitude > threshold &&
       Date.now() - lastPeak > timeBetweenSteps
     ) {
       setSteps((prevSteps) => prevSteps + 1);
@@ -40,9 +42,9 @@ const StepCounter = () => {
 
   return (
     <div>
-      <h1>Step Counter</h1>
+      <h1>Step Count</h1>
       <p>Steps: {steps}</p>
-      <p>Acceleration: {acceleration.toFixed(2)}</p>
+      <p>Acceleration Magnitude: {accelerationMagnitude.toFixed(2)}</p>
     </div>
   );
 };
