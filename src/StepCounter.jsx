@@ -30,7 +30,7 @@ const StepCounter = () => {
 
     // Parameters for step detection
     const threshold = 1.2; // Threshold for acceleration magnitude to count as a step
-    const timeBetweenSteps = 300; // Minimum time between steps in milliseconds
+    const timeBetweenSteps = 1000; // Minimum time between steps in milliseconds
 
     switch (state) {
       case 'WAITING_FOR_STEP':
